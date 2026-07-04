@@ -613,7 +613,7 @@ app.post("/api/create-order", async (c) => {
       return c.json({ error: "Unable to create Razorpay order." }, 500);
     }
 
-    const order = await response.json<RazorpayOrderResponse>();
+    const order: RazorpayOrderResponse = await response.json();
 
     return c.json({
       order_id: order.id,
@@ -838,7 +838,7 @@ app.get("/api/orders/mine", async (c) => {
     const orderRows = orders.results || [];
 
     const ordersWithItems = await Promise.all(
-      orderRows.map(async (order) => {
+      orderRows.map(async (order: OrderRow) => {
         const items = await c.env.DB.prepare(
           `SELECT item_name, quantity, price_at_time
            FROM order_items
