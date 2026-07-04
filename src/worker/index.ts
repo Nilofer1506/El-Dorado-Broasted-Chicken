@@ -613,7 +613,7 @@ app.post("/api/create-order", async (c) => {
       return c.json({ error: "Unable to create Razorpay order." }, 500);
     }
 
-    const order: RazorpayOrderResponse = await response.json();
+    const order = (await response.json()) as RazorpayOrderResponse;
 
     return c.json({
       order_id: order.id,
